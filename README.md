@@ -32,6 +32,15 @@ In development, the backend can run without `OPENAI_API_KEY` using a determinist
 
 See `ios/README.md` and `android/README.md` for platform-specific setup.
 
+The iOS app is SwiftUI/MVVM and uses URLSession async/await. The Android app is Kotlin/Jetpack Compose/MVVM and uses Retrofit, OkHttp, coroutines, and DataStore. Both apps render assistant responses, forecast cards, time series summaries, source attribution, clarification choices, settings, and explicit-tap location permission flows.
+
+## Documentation
+
+- `backend/README.md` — backend setup, Swagger, providers, Docker, API examples.
+- `docs/architecture.md` — monorepo architecture and security model.
+- `docs/api-contract.md` — request/response contracts.
+- `docs/providers.md` — Open-Meteo, NOAA, Google, Stormglass, and Meteomatics notes.
+
 ## Safety
 
 Forecasts are estimates and can change. This app is not a substitute for official marine, aviation, emergency, or local safety guidance.
