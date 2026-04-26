@@ -33,4 +33,10 @@ Open this directory in Android Studio, install an Android SDK, then run the `app
 ./gradlew test
 ```
 
+The checked-in wrapper scripts require a verified `gradle-wrapper.jar`. If it is missing, install Gradle locally and run:
+
+```bash
+gradle wrapper --gradle-version 8.9
+```
+
 This Linux VM may not include the Android SDK; Android Studio locally is the recommended validation path.
