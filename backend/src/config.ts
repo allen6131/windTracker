@@ -35,7 +35,6 @@ const envSchema = z
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
-  // eslint-disable-next-line no-console
   console.error("Invalid backend environment", parsed.error.flatten().fieldErrors);
   throw new Error("Invalid backend environment");
 }
@@ -63,6 +62,5 @@ export const config = {
 } as const;
 
 if (config.isMockAiMode && config.nodeEnv !== "test") {
-  // eslint-disable-next-line no-console
   console.warn("OPENAI_API_KEY is not set. Backend is running in deterministic development AI mode.");
 }

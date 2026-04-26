@@ -1,5 +1,5 @@
 import type { Coordinates } from "../domain/coordinates.js";
-import { LocationNotFoundError, ValidationError } from "../domain/errors.js";
+import { ValidationError } from "../domain/errors.js";
 import type { LocationCandidate } from "../domain/location.js";
 import type { LocationProvider } from "../providers/types/locationProvider.js";
 

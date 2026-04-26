@@ -1,4 +1,4 @@
-import { activityJsonSchema, cardSchema, coordinatesJsonSchema, forecastPayloadJsonSchema, sourceSchema, timeSeriesPointJsonSchema, unitsJsonSchema } from "./common.schemas.js";
+import { activityJsonSchema, cardSchema, coordinatesJsonSchema, sourceSchema, timeSeriesPointJsonSchema, unitsJsonSchema } from "./common.schemas.js";
 import { errorResponses } from "./error.schemas.js";
 
 export const forecastRequestBodyJsonSchema = {

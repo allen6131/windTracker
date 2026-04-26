@@ -1,8 +1,4 @@
 import type { ChatRequest, ChatResponse, ForecastIntent } from "../domain/chat.js";
-import type { NormalizedWeatherForecast } from "../domain/forecast.js";
-import type { NormalizedMarineForecast } from "../domain/marine.js";
-import type { NormalizedTideForecast } from "../domain/tides.js";
-import type { NormalizedAlert, NormalizedObservation } from "../domain/observations.js";
 import type { LocationCandidate } from "../domain/location.js";
 import type { UnitSystem } from "../domain/units.js";
 import { config } from "../config.js";
