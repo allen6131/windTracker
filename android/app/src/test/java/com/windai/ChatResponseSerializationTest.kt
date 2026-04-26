@@ -1,6 +1,6 @@
 package com.windai
 
-import com.windai.data.api.ChatResponse
+import com.windai.data.api.ChatResponseDto
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -19,7 +19,7 @@ class ChatResponseSerializationTest {
               "warnings":[]
             }
         """.trimIndent()
-        val decoded = Json { ignoreUnknownKeys = true }.decodeFromString<ChatResponse>(json)
+        val decoded = Json { ignoreUnknownKeys = true }.decodeFromString<ChatResponseDto>(json)
         assertEquals("c1", decoded.conversationId)
         assertEquals("Wind", decoded.cards.first().title)
     }

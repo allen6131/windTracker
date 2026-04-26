@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.windai.data.api.ForecastCard
+import com.windai.data.api.ForecastCardDto
 
 @Composable
-fun ForecastCards(cards: List<ForecastCard>, modifier: Modifier = Modifier) {
+fun ForecastCards(cards: List<ForecastCardDto>, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         cards.forEach { card ->
             ForecastCardView(card)
@@ -26,7 +26,7 @@ fun ForecastCards(cards: List<ForecastCard>, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ForecastCardView(card: ForecastCard) {
+fun ForecastCardView(card: ForecastCardDto) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,9 +45,9 @@ fun ForecastCardView(card: ForecastCard) {
     }
 }
 
-@Composable fun CurrentConditionsCard(card: ForecastCard) = ForecastCardView(card)
-@Composable fun WindCard(card: ForecastCard) = ForecastCardView(card)
-@Composable fun MarineCard(card: ForecastCard) = ForecastCardView(card)
-@Composable fun BestWindowsCard(card: ForecastCard) = ForecastCardView(card)
-@Composable fun TideCard(card: ForecastCard) = ForecastCardView(card)
-@Composable fun AlertsCard(card: ForecastCard) = ForecastCardView(card)
+@Composable fun CurrentConditionsCard(card: ForecastCardDto) = ForecastCardView(card)
+@Composable fun WindCard(card: ForecastCardDto) = ForecastCardView(card)
+@Composable fun MarineCard(card: ForecastCardDto) = ForecastCardView(card)
+@Composable fun BestWindowsCard(card: ForecastCardDto) = ForecastCardView(card)
+@Composable fun TideCard(card: ForecastCardDto) = ForecastCardView(card)
+@Composable fun AlertsCard(card: ForecastCardDto) = ForecastCardView(card)

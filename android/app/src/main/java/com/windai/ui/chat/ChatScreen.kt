@@ -50,26 +50,24 @@ fun ChatScreen(viewModel: ChatViewModel, onUseLocation: (() -> Unit)? = null) {
                 items(state.messages) { message ->
                     Text("${if (message.isUser) "You" else "Wind AI"}: ${message.text}")
                 }
-                state.response?.let { response ->
-                    item { ForecastCards(response.cards, response.sources, response.warnings) }
-                    if (response.clarification.needed) {
-                        item {
-                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Text(response.clarification.question ?: "Which location did you mean?")
-                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    response.clarification.choices.take(3).forEach { choice ->
-                                        AssistChip(
-                                            onClick = { viewModel.send("Use ${choice.label}") },
-                                            label = { Text(choice.label) }
-                                        )
-                                    }
+                item { ForecastCards(state.cards, state.sources, state.warnings) }
+                if (state.clarification.needed) {
+                    item {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text(state.clarification.question ?: "Which location did you mean?")
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                state.clarification.choices.take(3).forEach { choice ->
+                                    AssistChip(
+                                        onClick = { viewModel.send("Use ${choice.label}") },
+                                        label = { Text(choice.label) },
+                                    )
                                 }
                             }
                         }
                     }
                 }
             }
-            state.errorMessage?.let {
+            state.error?.let {
                 Text(it)
                 TextButton(onClick = { viewModel.send(draft) }) { Text("Retry") }
             }

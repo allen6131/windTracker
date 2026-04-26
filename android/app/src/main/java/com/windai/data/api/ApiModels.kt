@@ -91,3 +91,14 @@ data class SourceDto(
     val stationId: String? = null,
     val distanceKm: Double? = null
 )
+
+typealias Coordinates = CoordinatesDto
+typealias ChatRequest = ChatRequestDto
+typealias ChatResponse = ChatResponseDto
+typealias Location = LocationDto
+typealias Clarification = ClarificationDto
+typealias LocationChoice = LocationChoiceDto
+typealias ForecastCard = ForecastCardDto
+typealias ForecastCardItem = ForecastCardItemDto
+typealias TimeSeriesPoint = TimeSeriesPointDto
+typealias SourceAttribution = SourceDto

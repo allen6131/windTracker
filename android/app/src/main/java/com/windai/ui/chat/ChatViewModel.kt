@@ -3,7 +3,10 @@ package com.windai.ui.chat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.windai.data.api.ChatResponse
+import com.windai.data.api.Clarification
 import com.windai.data.api.Coordinates
+import com.windai.data.api.ForecastCard
+import com.windai.data.api.SourceAttribution
 import com.windai.data.repository.ChatRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,13 +18,14 @@ data class ChatMessage(val text: String, val isUser: Boolean)
 
 data class ChatUiState(
     val messages: List<ChatMessage> = listOf(ChatMessage("Ask about wind, waves, tides, or the best activity window.", false)),
-    val cards: List<com.windai.data.api.ForecastCard> = emptyList(),
-    val clarification: com.windai.data.api.Clarification = com.windai.data.api.Clarification(false),
-    val sources: List<com.windai.data.api.SourceAttribution> = emptyList(),
+    val cards: List<ForecastCard> = emptyList(),
+    val clarification: Clarification = Clarification(needed = false),
+    val sources: List<SourceAttribution> = emptyList(),
     val warnings: List<String> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null,
-    val conversationId: String? = null
+    val conversationId: String? = null,
+    val lastMessage: String? = null,
 )
 
 class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
@@ -30,7 +34,14 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
 
     fun send(message: String, units: String = "imperial", userLocation: Coordinates? = null) {
         if (message.isBlank()) return
-        _state.update { it.copy(isLoading = true, error = null, messages = it.messages + ChatMessage(message, true)) }
+        _state.update {
+            it.copy(
+                isLoading = true,
+                error = null,
+                lastMessage = message,
+                messages = it.messages + ChatMessage(message, true),
+            )
+        }
         viewModelScope.launch {
             repository.sendChat(message, _state.value.conversationId, units, userLocation)
                 .onSuccess { response -> applyResponse(response) }
@@ -40,6 +51,10 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
                     }
                 }
         }
+    }
+
+    fun retry(units: String = "imperial") {
+        state.value.lastMessage?.let { send(it, units) }
     }
 
     private fun applyResponse(response: ChatResponse) {
@@ -52,7 +67,7 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
                 clarification = response.clarification,
                 sources = response.sources,
                 warnings = response.warnings,
-                error = null
+                error = null,
             )
         }
     }

@@ -1,5 +1,6 @@
 package com.windai
 
+import com.windai.data.api.ChatRequest
 import com.windai.data.api.ChatResponse
 import com.windai.data.api.Clarification
 import com.windai.data.repository.ChatRepository
@@ -35,7 +36,7 @@ class ChatViewModelTest {
     @Test
     fun sendMessageUpdatesSuccessState() = runTest {
         val repository = object : ChatRepository {
-            override suspend fun sendMessage(message: String, units: String, lat: Double?, lon: Double?) =
+            override suspend fun sendChat(request: ChatRequest): Result<ChatResponse> =
                 Result.success(
                     ChatResponse(
                         conversationId = "c1",
@@ -46,7 +47,7 @@ class ChatViewModelTest {
         }
         val viewModel = ChatViewModel(repository)
 
-        viewModel.sendMessage("South Padre tomorrow")
+        viewModel.send("South Padre tomorrow")
         advanceUntilIdle()
 
         assertFalse(viewModel.state.value.isLoading)
