@@ -1,9 +1,12 @@
 import { nanoid } from "nanoid";
 import type { ChatRequest, ChatResponse } from "../domain/chat.js";
-import { OpenAiOrchestrator } from "./openAiOrchestrator.js";
+
+export interface ChatOrchestrator {
+  handleChat(request: ChatRequest, conversationId: string): Promise<ChatResponse>;
+}
 
 export class ChatService {
-  constructor(private readonly orchestrator: OpenAiOrchestrator) {}
+  constructor(private readonly orchestrator: ChatOrchestrator) {}
 
   async sendMessage(request: ChatRequest): Promise<ChatResponse> {
     const conversationId = request.conversationId ?? `conv_${nanoid(12)}`;
