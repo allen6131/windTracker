@@ -99,7 +99,13 @@ export class LocationService {
   }
 
   private sortResults(results: LocationCandidate[], _userLocation?: Coordinates): LocationCandidate[] {
-    return [...results].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0));
+    return [...results].sort((a, b) => {
+      const confidenceDelta = (b.confidence ?? 0) - (a.confidence ?? 0);
+      if (Math.abs(confidenceDelta) > 0.001) return confidenceDelta;
+      const aPopulation = "population" in a && typeof a.population === "number" ? a.population : 0;
+      const bPopulation = "population" in b && typeof b.population === "number" ? b.population : 0;
+      return bPopulation - aPopulation;
+    });
   }
 
   private shouldAskForClarification(query: string, choices: LocationCandidate[]): boolean {
