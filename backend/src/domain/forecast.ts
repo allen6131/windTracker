@@ -1,4 +1,4 @@
-import type { SourceAttribution } from "./sources";
+import type { SourceAttribution } from "./sources.js";
 
 export interface NormalizedWeatherPoint {
   time: string;

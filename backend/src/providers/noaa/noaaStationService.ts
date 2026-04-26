@@ -35,4 +35,8 @@ export class NoaaStationService {
     const nearest = sorted[0];
     return nearest && nearest.distanceKm <= maxDistanceKm ? nearest : null;
   }
+
+  async findNearestCoopsStation(coordinates: Coordinates, maxDistanceKm: number): Promise<(NoaaStation & { distanceKm: number }) | null> {
+    return this.nearestStation(coordinates, maxDistanceKm);
+  }
 }

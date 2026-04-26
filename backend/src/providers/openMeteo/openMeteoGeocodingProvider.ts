@@ -36,23 +36,29 @@ export class OpenMeteoGeocodingProvider implements LocationProvider {
     url.searchParams.set("format", "json");
 
     try {
-      const json = await fetchJson<{ results?: OpenMeteoGeocodeResult[] }>(url, { timeoutMs: 6000 });
+      const json = await fetchJson<{ results?: OpenMeteoGeocodeResult[] }>(url, "Open-Meteo", 6000);
       const candidates =
-        json.results?.map((result, index) => ({
-          id: `openmeteo_${result.id}`,
-          name: result.name,
-          admin1: result.admin1,
-          country: result.country,
-          lat: result.latitude,
-          lon: result.longitude,
-          timezone: result.timezone,
-          source: "Open-Meteo" as const,
-          confidence: Math.max(0.35, 0.95 - index * 0.12),
-        })) ?? [];
+        json.results?.map((result, index) =>
+          compactLocation({
+            id: `openmeteo_${result.id}`,
+            name: result.name,
+            admin1: result.admin1,
+            country: result.country,
+            lat: result.latitude,
+            lon: result.longitude,
+            timezone: result.timezone,
+            source: "Open-Meteo" as const,
+            confidence: Math.max(0.35, 0.95 - index * 0.12),
+          }),
+        ) ?? [];
       await this.cache.set(cacheKey, candidates, 7 * 24 * 60 * 60);
       return candidates;
     } catch (error) {
       throw new ProviderError("Open-Meteo", error instanceof Error ? error.message : "Geocoding failed");
     }
   }
+}
+
+function compactLocation(location: LocationCandidate): LocationCandidate {
+  return Object.fromEntries(Object.entries(location).filter(([, value]) => value !== undefined)) as LocationCandidate;
 }

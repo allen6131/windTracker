@@ -5,11 +5,10 @@ import { NoaaStationService } from "./noaaStationService.js";
 import { fetchJson } from "../../utils/fetchJson.js";
 
 export class NoaaCoopsProvider implements TideProvider {
-  private readonly stationService: NoaaStationService;
-
-  constructor(private readonly cache: Cache) {
-    this.stationService = new NoaaStationService(cache);
-  }
+  constructor(
+    private readonly stationService: NoaaStationService,
+    private readonly cache: Cache,
+  ) {}
 
   async getTides(input: TideProviderInput): Promise<NormalizedTideForecast | null> {
     const station = await this.stationService.findNearestCoopsStation(input.coordinates, 100);
@@ -34,31 +33,29 @@ export class NoaaCoopsProvider implements TideProvider {
     url.searchParams.set("format", "json");
 
     try {
-      const json = await fetchJson<{ predictions?: Array<{ t: string; v: string; type?: string }> }>(url, {
-        timeoutMs: 7000,
-      });
+      const json = await fetchJson<{ predictions?: Array<{ t: string; v: string; type?: string }> }>(url, "NOAA CO-OPS", 7000);
       const points: NormalizedTidePoint[] =
-        json.predictions?.map((point) => ({
-          time: `${point.t.replace(" ", "T")}:00Z`,
-          heightM: Number.isFinite(Number(point.v)) ? Number(point.v) : undefined,
-          type: point.type === "H" ? "high" : point.type === "L" ? "low" : undefined,
-        })) ?? [];
+        json.predictions?.map((point) => {
+          const mapped: NormalizedTidePoint = { time: `${point.t.replace(" ", "T")}:00Z` };
+          const height = Number(point.v);
+          if (Number.isFinite(height)) mapped.heightM = height;
+          if (point.type === "H") mapped.type = "high";
+          if (point.type === "L") mapped.type = "low";
+          return mapped;
+        }) ?? [];
       const forecast: NormalizedTideForecast = {
         points,
         stationName: station.name,
         stationId: station.id,
-        distanceKm: station.distanceKm,
-        sources: [
-          {
-            provider: "NOAA CO-OPS",
-            dataset: "Tide Predictions",
-            url: "https://api.tidesandcurrents.noaa.gov",
-            fetchedAt: new Date().toISOString(),
-            stationName: station.name,
-            stationId: station.id,
-            distanceKm: station.distanceKm,
-          },
-        ],
+        source: {
+          provider: "NOAA CO-OPS",
+          dataset: "Tide Predictions",
+          url: "https://api.tidesandcurrents.noaa.gov",
+          fetchedAt: new Date().toISOString(),
+          stationName: station.name,
+          stationId: station.id,
+          distanceKm: station.distanceKm,
+        },
         warnings: [],
       };
       await this.cache.set(cacheKey, forecast, 6 * 60 * 60);
@@ -68,8 +65,14 @@ export class NoaaCoopsProvider implements TideProvider {
         points: [],
         stationName: station.name,
         stationId: station.id,
-        distanceKm: station.distanceKm,
-        sources: [],
+        source: {
+          provider: "NOAA CO-OPS",
+          dataset: "Tide Predictions",
+          fetchedAt: new Date().toISOString(),
+          stationName: station.name,
+          stationId: station.id,
+          distanceKm: station.distanceKm,
+        },
         warnings: ["NOAA tide predictions are unavailable right now."],
       };
     }

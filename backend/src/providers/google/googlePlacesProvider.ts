@@ -54,7 +54,7 @@ export class GooglePlacesProvider implements LocationProvider {
         ?.filter((place) => place.location?.latitude !== undefined && place.location.longitude !== undefined)
         .map((place, index) => {
           const parts = place.formattedAddress?.split(",").map((part) => part.trim()) ?? [];
-          return {
+          return compactLocation({
             id: `google_${place.id ?? index}`,
             name: place.displayName?.text ?? parts[0] ?? input.query,
             admin1: parts.length > 2 ? parts[parts.length - 2] : undefined,
@@ -63,10 +63,14 @@ export class GooglePlacesProvider implements LocationProvider {
             lon: place.location?.longitude ?? 0,
             source: "Google" as const,
             confidence: Math.max(0.5, 0.98 - index * 0.1),
-          };
+          });
         }) ?? [];
 
     await this.cache.set(cacheKey, results, 7 * 24 * 60 * 60);
     return results;
   }
+}
+
+function compactLocation(location: LocationCandidate): LocationCandidate {
+  return Object.fromEntries(Object.entries(location).filter(([, value]) => value !== undefined)) as LocationCandidate;
 }

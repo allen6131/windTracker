@@ -135,6 +135,13 @@ export const chatRouteSchema = {
     "Main endpoint for native mobile chat UI. The backend resolves intent, fetches provider data, ranks windows, and returns conversational and structured forecast output.",
   tags: ["Chat"],
   body: chatRequestSchema,
+  examples: [
+    {
+      message: "Is South Padre good for kiteboarding tomorrow afternoon?",
+      units: "imperial",
+      platform: "ios",
+    },
+  ],
   response: {
     200: chatResponseSchema,
     ...errorResponses,

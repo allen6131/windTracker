@@ -26,3 +26,10 @@ export function filterByWindow<T extends { time: string }>(points: T[], startTim
     return Number.isFinite(time) && time >= start && time <= end;
   });
 }
+
+export function summarizeDateRange(start?: string | null, end?: string | null): string | undefined {
+  if (!start && !end) return undefined;
+  const format = (value: string) => new Date(value).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric" });
+  if (start && end) return `${format(start)} – ${format(end)}`;
+  return start ? `Starting ${format(start)}` : `Until ${format(end!)}`;
+}

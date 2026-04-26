@@ -1,5 +1,5 @@
-import { coordinatesSchema, locationCandidateSchema } from "./common.schemas.js";
-import { errorResponseSchemas } from "./error.schemas.js";
+import { coordinatesJsonSchema, locationCandidateJsonSchema } from "./common.schemas.js";
+import { errorResponses } from "./error.schemas.js";
 
 export const locationSearchRequestJsonSchema = {
   type: "object",
@@ -7,7 +7,7 @@ export const locationSearchRequestJsonSchema = {
   additionalProperties: false,
   properties: {
     query: { type: "string", minLength: 1, maxLength: 300, examples: ["South Padre"] },
-    userLocation: coordinatesSchema,
+    userLocation: coordinatesJsonSchema,
   },
 } as const;
 
@@ -17,7 +17,7 @@ export const locationSearchResponseJsonSchema = {
   additionalProperties: false,
   properties: {
     query: { type: "string" },
-    results: { type: "array", items: locationCandidateSchema },
+    results: { type: "array", items: locationCandidateJsonSchema },
   },
 } as const;
 
@@ -28,7 +28,7 @@ export const locationSearchRouteSchema = {
   body: locationSearchRequestJsonSchema,
   response: {
     200: locationSearchResponseJsonSchema,
-    ...errorResponseSchemas,
+    ...errorResponses,
   },
   examples: [
     {

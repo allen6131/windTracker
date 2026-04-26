@@ -56,6 +56,15 @@ export const forecastResponseJsonSchema = {
     sources: { type: "array", items: sourceSchema },
     warnings: { type: "array", items: { type: "string" } },
   },
+  examples: [
+    {
+      location: { name: "South Padre Island", lat: 26.1118, lon: -97.1681 },
+      cards: [{ type: "forecast_summary", title: "Wind summary", items: [{ label: "Wind", value: "12 mph SE" }] }],
+      timeSeries: [],
+      sources: [{ provider: "Open-Meteo", dataset: "Forecast API", fetchedAt: "2026-04-26T12:00:00.000Z" }],
+      warnings: [],
+    },
+  ],
 } as const;
 
 export const forecastRouteSchema = {

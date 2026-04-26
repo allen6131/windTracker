@@ -4,6 +4,7 @@ export type SourceProvider =
   | "NOAA NDBC"
   | "NWS"
   | "Google"
+  | "OpenAI"
   | "Stormglass"
   | "Meteomatics";
 

@@ -1,9 +1,9 @@
-import type { Activity } from "./activity";
-import type { ForecastCard } from "./cards";
-import type { Coordinates } from "./coordinates";
-import type { LocationCandidate } from "./location";
-import type { SourceAttribution } from "./sources";
-import type { UnitSystem } from "./units";
+import type { Activity } from "./activity.js";
+import type { ForecastCard } from "./cards.js";
+import type { Coordinates } from "./coordinates.js";
+import type { LocationCandidate } from "./location.js";
+import type { SourceAttribution } from "./sources.js";
+import type { UnitSystem } from "./units.js";
 
 export type Platform = "ios" | "android" | "web" | "unknown";
 

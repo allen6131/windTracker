@@ -29,10 +29,16 @@ export class OpenMeteoMarineProvider implements MarineProvider {
       timezone: "auto",
       forecast_days: "7",
     });
-    const url = `https://marine-api.open-meteo.com/v1/marine?${params}`;
+    const url = new URL(`https://marine-api.open-meteo.com/v1/marine?${params}`);
     try {
-      const raw = await fetchJson<unknown>(url, { timeoutMs: config.providerTimeoutMs });
-      const mapped = mapOpenMeteoMarine(raw, url);
+      const raw = await fetchJson<unknown>(url, "Open-Meteo", config.providerTimeoutMs);
+      const mapped = mapOpenMeteoMarine(raw, {
+        provider: "Open-Meteo",
+        dataset: "Marine API",
+        url: url.toString(),
+        fetchedAt: new Date().toISOString(),
+      });
+      if (!mapped) return null;
       if (!mapped.hourly.length) return null;
       await this.cache.set(cacheKey, mapped, 30 * 60);
       return mapped;

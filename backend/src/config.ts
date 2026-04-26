@@ -58,6 +58,7 @@ export const config = {
   chatRateLimitMax: parsed.data.CHAT_RATE_LIMIT_MAX,
   logLevel: parsed.data.LOG_LEVEL,
   providerTimeoutMs: parsed.data.PROVIDER_TIMEOUT_MS,
+  defaultForecastDays: 7,
   isMockAiMode: !parsed.data.OPENAI_API_KEY && parsed.data.NODE_ENV !== "production"
 } as const;
 

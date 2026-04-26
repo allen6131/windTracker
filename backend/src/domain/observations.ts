@@ -1,5 +1,5 @@
-import type { Coordinates } from "./coordinates";
-import type { SourceAttribution } from "./sources";
+import type { Coordinates } from "./coordinates.js";
+import type { SourceAttribution } from "./sources.js";
 
 export interface NormalizedObservation {
   id: string;
@@ -16,5 +16,15 @@ export interface NormalizedObservation {
   waveHeightM?: number;
   wavePeriodSeconds?: number;
   pressureHpa?: number;
+  source: SourceAttribution;
+}
+
+export interface NormalizedAlert {
+  id: string;
+  title: string;
+  severity?: "normal" | "watch" | "warning";
+  description?: string;
+  effective?: string;
+  expires?: string;
   source: SourceAttribution;
 }

@@ -18,7 +18,7 @@ export interface AvoidWindow {
   reasons: string[];
 }
 
-export interface RankingResult {
+export interface ActivityRankingResult {
   bestWindows: RankedWindow[];
   avoidWindows: AvoidWindow[];
 }
@@ -28,7 +28,7 @@ export function rankActivityWindows(input: {
   forecast: NormalizedWeatherForecast;
   marine?: NormalizedMarineForecast | null;
   tides?: NormalizedTideForecast | null;
-}): RankingResult {
+}): ActivityRankingResult {
   const hourly = input.forecast.hourly.slice(0, 168);
   if (hourly.length === 0) return { bestWindows: [], avoidWindows: [] };
 
@@ -141,4 +141,21 @@ function labelForScore(score: number): string {
   if (score >= 65) return "Good";
   if (score >= 45) return "Possible";
   return "Marginal";
+}
+
+export class ActivityRankingService {
+  rank(input: {
+    activity: Activity;
+    weather: NormalizedWeatherForecast | null;
+    marine?: NormalizedMarineForecast | null;
+    tides?: NormalizedTideForecast | null;
+  }): ActivityRankingResult {
+    if (!input.weather) return { bestWindows: [], avoidWindows: [] };
+    return rankActivityWindows({
+      activity: input.activity,
+      forecast: input.weather,
+      marine: input.marine,
+      tides: input.tides,
+    });
+  }
 }

@@ -1,10 +1,10 @@
 import type { Coordinates } from "../../domain/coordinates.js";
-import type { ProviderName, SourceAttribution } from "../../domain/sources.js";
+import type { SourceAttribution, SourceProvider } from "../../domain/sources.js";
 import type { NormalizedMarineForecast } from "../../domain/marine.js";
 import type { NormalizedTideForecast } from "../../domain/tides.js";
 
 export class StormglassProvider {
-  readonly providerName: ProviderName = "Stormglass";
+  readonly providerName: SourceProvider = "Stormglass";
 
   constructor(private readonly apiKey?: string) {}
 

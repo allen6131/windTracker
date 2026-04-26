@@ -1,4 +1,4 @@
-import type { Coordinates } from "../domain/coordinates";
+import type { Coordinates } from "../domain/coordinates.js";
 
 const EARTH_RADIUS_KM = 6371.0088;
 
@@ -14,6 +14,14 @@ export function haversineDistanceKm(a: Coordinates, b: Coordinates): number {
 
   return 2 * EARTH_RADIUS_KM * Math.asin(Math.sqrt(h));
 }
+
+export const haversineKm = haversineDistanceKm;
+
+export function roundCoordinateForCache(value: number, precision = 0.02): number {
+  return Math.round(value / precision) * precision;
+}
+
+export const roundCoordinate = roundCoordinateForCache;
 
 export function findNearestByCoordinates<T extends { lat: number; lon: number }>(
   origin: Coordinates,

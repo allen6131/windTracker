@@ -2,7 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { AppError } from "../domain/errors.js";
 
 export async function registerErrorHandler(app: FastifyInstance): Promise<void> {
-  app.setErrorHandler((error, request, reply) => {
+  app.setErrorHandler((error: Error & { validation?: unknown; statusCode?: number }, request, reply) => {
     const requestId = request.id;
 
     if (error.validation) {

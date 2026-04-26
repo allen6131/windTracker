@@ -65,8 +65,13 @@ export class OpenMeteoForecastProvider implements WeatherProvider {
     url.searchParams.set("wind_speed_unit", "ms");
 
     try {
-      const raw = await fetchJson<unknown>(url, { timeoutMs: config.providerTimeoutMs });
-      const forecast = mapOpenMeteoForecast(raw, url.toString());
+      const raw = await fetchJson<unknown>(url, "Open-Meteo", config.providerTimeoutMs);
+      const forecast = mapOpenMeteoForecast(raw, {
+        provider: "Open-Meteo",
+        dataset: "Forecast API",
+        url: url.toString(),
+        fetchedAt: new Date().toISOString(),
+      });
       await this.cache.set(cacheKey, forecast, 15 * 60);
       return forecast;
     } catch (error) {

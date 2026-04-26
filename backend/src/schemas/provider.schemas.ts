@@ -17,3 +17,12 @@ export const providerStatusResponseSchema = {
     },
   },
 } as const;
+
+export const providerStatusRouteSchema = {
+  summary: "Get provider status",
+  description: "Return configured provider capabilities and whether optional API keys are present.",
+  tags: ["Providers"],
+  response: {
+    200: providerStatusResponseSchema,
+  },
+} as const;

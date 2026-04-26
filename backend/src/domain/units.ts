@@ -1,1 +1,2 @@
-export type Units = "metric" | "imperial" | "knots";
+export type UnitSystem = "metric" | "imperial" | "knots";
+export type Units = UnitSystem;

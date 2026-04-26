@@ -58,6 +58,42 @@ export class UnitConversionService {
     if (value === undefined || Number.isNaN(value)) return "—";
     return `${value.toFixed(digits)} ${suffix}`;
   }
+
+  convertWind(ms: number, units: UnitSystem): { value: number; unit: string } {
+    return { value: Number(this.windSpeed(ms, units).toFixed(1)), unit: this.windSpeedUnit(units) };
+  }
+
+  convertTemperature(celsius: number, units: UnitSystem): { value: number; unit: string } {
+    return { value: Number(this.temperature(celsius, units).toFixed(1)), unit: this.temperatureUnit(units) };
+  }
+
+  convertWaveHeight(meters: number, units: UnitSystem): { value: number; unit: string } {
+    return { value: Number(this.waveHeight(meters, units).toFixed(1)), unit: this.waveHeightUnit(units) };
+  }
+
+  formatWind(ms: number | undefined, units: UnitSystem): string {
+    if (ms === undefined) return "—";
+    return this.format(this.windSpeed(ms, units), this.windSpeedUnit(units));
+  }
+
+  formatWindSpeed(ms: number | undefined, units: UnitSystem): string {
+    return this.formatWind(ms, units);
+  }
+
+  formatTemperature(celsius: number | undefined, units: UnitSystem): string {
+    if (celsius === undefined) return "—";
+    return this.format(this.temperature(celsius, units), this.temperatureUnit(units));
+  }
+
+  formatWaveHeight(meters: number | undefined, units: UnitSystem): string {
+    if (meters === undefined) return "—";
+    return this.format(this.waveHeight(meters, units), this.waveHeightUnit(units), 1);
+  }
+
+  formatDistance(km: number | undefined, units: UnitSystem): string {
+    if (km === undefined) return "—";
+    return this.format(this.distance(km, units), this.distanceUnit(units), 1);
+  }
 }
 
 export const unitConversionService = new UnitConversionService();

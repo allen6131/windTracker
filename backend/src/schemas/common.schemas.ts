@@ -58,6 +58,8 @@ export const locationCandidateJsonSchema = {
   },
 } as const;
 
+export const locationCandidateSchema = locationCandidateJsonSchema;
+
 export const sourceSchema = {
   type: "object",
   required: ["provider", "dataset", "fetchedAt"],
@@ -141,6 +143,8 @@ export const timeSeriesPointSchema = {
   },
 } as const;
 
+export const timeSeriesPointJsonSchema = timeSeriesPointSchema;
+
 export const forecastPayloadSchema = {
   type: "object",
   required: ["cards", "timeSeries", "sources", "warnings"],
@@ -152,3 +156,7 @@ export const forecastPayloadSchema = {
     warnings: { type: "array", items: { type: "string" } },
   },
 } as const;
+
+export const forecastPayloadJsonSchema = forecastPayloadSchema;
+export const unitsJsonSchema = unitsSchema;
+export const activityJsonSchema = activitySchema;
