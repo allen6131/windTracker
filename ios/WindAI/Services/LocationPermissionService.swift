@@ -20,6 +20,9 @@ final class LocationPermissionService: NSObject, ObservableObject, CLLocationMan
         authorizationStatus = manager.authorizationStatus
         if authorizationStatus == .notDetermined {
             manager.requestWhenInUseAuthorization()
+            return try await withCheckedThrowingContinuation { continuation in
+                self.continuation = continuation
+            }
         }
         guard authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways else {
             throw LocationError.permissionDenied
@@ -32,6 +35,12 @@ final class LocationPermissionService: NSObject, ObservableObject, CLLocationMan
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationStatus = manager.authorizationStatus
+        if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways {
+            manager.requestLocation()
+        } else if authorizationStatus == .denied || authorizationStatus == .restricted {
+            continuation?.resume(throwing: LocationError.permissionDenied)
+            continuation = nil
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

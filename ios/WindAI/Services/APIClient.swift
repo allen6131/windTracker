@@ -29,7 +29,13 @@ final class APIClient: APIClientProtocol {
     private let encoder: JSONEncoder
 
     init(
-        baseURL: URL = URL(string: ProcessInfo.processInfo.environment["WIND_AI_API_BASE_URL"] ?? "http://localhost:3000")!,
+        baseURL: URL = {
+            if let infoValue = Bundle.main.object(forInfoDictionaryKey: "API_BASE_URL") as? String,
+               let url = URL(string: infoValue) {
+                return url
+            }
+            return URL(string: ProcessInfo.processInfo.environment["WIND_AI_API_BASE_URL"] ?? "http://localhost:3000")!
+        }(),
         session: URLSession = .shared
     ) {
         self.baseURL = baseURL

@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct ChatScreen: View {
-    @StateObject var viewModel = ChatViewModel()
+    @EnvironmentObject private var viewModel: ChatViewModel
+    @EnvironmentObject private var settings: SettingsViewModel
     @State private var input = ""
     @State private var showingSettings = false
 
@@ -14,7 +15,7 @@ struct ChatScreen: View {
                             ForEach(viewModel.messages) { message in
                                 MessageBubble(message: message)
                             }
-                            if let response = viewModel.response {
+                            if let response = viewModel.latestResponse {
                                 ForecastCards(response: response)
                                     .padding(.horizontal)
                             }
@@ -34,16 +35,15 @@ struct ChatScreen: View {
                     HStack {
                         Text(error).font(.footnote).foregroundStyle(.red)
                         Spacer()
-                        Button("Retry") { Task { await viewModel.retry() } }
+                        Button("Retry") { Task { await viewModel.retry(units: settings.units) } }
                     }
                     .padding(.horizontal)
                     .padding(.vertical, 8)
                 }
 
-                if let clarification = viewModel.response?.clarification, clarification.needed {
+                if let clarification = viewModel.pendingClarification, clarification.needed {
                     LocationDisambiguationView(clarification: clarification) { choice in
-                        input = choice.label
-                        Task { await viewModel.send(input) }
+                        Task { await viewModel.select(choice: choice, units: settings.units) }
                     }
                     .padding(.horizontal)
                 }
@@ -53,7 +53,11 @@ struct ChatScreen: View {
             .navigationTitle("Wind AI")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Use current location") { Task { await viewModel.useCurrentLocation() } }
+                    Button("Use current location") {
+                        viewModel.inputText = input
+                        input = ""
+                        Task { await viewModel.useCurrentLocationAndSend(units: settings.units) }
+                    }
                         .accessibilityLabel("Use current location")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -72,7 +76,8 @@ struct ChatScreen: View {
             Button {
                 let text = input
                 input = ""
-                Task { await viewModel.send(text) }
+                viewModel.inputText = text
+                Task { await viewModel.sendCurrentMessage(units: settings.units) }
             } label: {
                 Image(systemName: "paperplane.fill")
             }
