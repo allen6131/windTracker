@@ -75,8 +75,10 @@ export interface ChatTimeSeriesPoint {
   windDirectionCompass?: string;
   windGust?: number;
   airTemperature?: number;
+  airTemperatureUnit?: string;
   precipitationProbability?: number;
   waveHeight?: number;
+  waveHeightUnit?: string;
   swellHeight?: number;
   wavePeriod?: number;
 }

@@ -1,137 +1,133 @@
-import { Type } from "@sinclair/typebox";
-import { activityValues } from "../domain/activity.js";
-import { cardSchema, coordinatesJsonSchema, coordinatesSchema, sourceAttributionSchema, unitsSchema } from "./common.schemas.js";
-import { errorResponseSchemas } from "./error.schemas.js";
+import { activities, cardSchema, coordinatesJsonSchema, sourceSchema, timeSeriesPointSchema, units } from "./common.schemas.js";
+import { errorResponses } from "./error.schemas.js";
 
-export const platformSchema = Type.Union([
-  Type.Literal("ios"),
-  Type.Literal("android"),
-  Type.Literal("web"),
-  Type.Literal("unknown"),
-]);
+const platformSchema = { type: "string", enum: ["ios", "android", "web", "unknown"] } as const;
 
-export const chatRequestSchema = Type.Object(
-  {
-    conversationId: Type.Optional(Type.String({ minLength: 1, maxLength: 160 })),
-    message: Type.String({ minLength: 1, maxLength: 2000 }),
-    userLocation: Type.Optional(coordinatesJsonSchema),
-    units: Type.Optional(unitsSchema),
+export const chatRequestSchema = {
+  type: "object",
+  required: ["message", "platform"],
+  additionalProperties: false,
+  properties: {
+    conversationId: { type: "string", minLength: 1, maxLength: 160 },
+    message: { type: "string", minLength: 1, maxLength: 2000 },
+    userLocation: coordinatesJsonSchema,
+    units: { type: "string", enum: units },
     platform: platformSchema,
   },
-  {
-    additionalProperties: false,
-    examples: [
-      {
-        conversationId: "conv_123",
-        message: "Is South Padre good for kiteboarding tomorrow afternoon?",
-        userLocation: { lat: 40.7128, lon: -74.006 },
-        units: "imperial",
-        platform: "ios",
+  examples: [
+    {
+      conversationId: "conv_123",
+      message: "Is South Padre good for kiteboarding tomorrow afternoon?",
+      userLocation: { lat: 40.7128, lon: -74.006 },
+      units: "imperial",
+      platform: "ios",
+    },
+  ],
+} as const;
+
+export const chatResponseSchema = {
+  type: "object",
+  required: ["conversationId", "assistantMessage", "clarification", "cards", "timeSeries", "sources", "warnings"],
+  additionalProperties: false,
+  properties: {
+    conversationId: { type: "string" },
+    assistantMessage: { type: "string" },
+    location: {
+      type: "object",
+      required: ["name", "lat", "lon"],
+      additionalProperties: false,
+      properties: {
+        name: { type: "string" },
+        admin1: { type: "string" },
+        country: { type: "string" },
+        lat: { type: "number" },
+        lon: { type: "number" },
+        timezone: { type: "string" },
       },
-    ],
-  },
-);
-
-export const chatTimeSeriesPointSchema = Type.Object(
-  {
-    time: Type.String({ format: "date-time" }),
-    windSpeed: Type.Optional(Type.Number()),
-    windSpeedUnit: Type.Optional(Type.String()),
-    windDirectionDegrees: Type.Optional(Type.Number()),
-    windDirectionCompass: Type.Optional(Type.String()),
-    windGust: Type.Optional(Type.Number()),
-    airTemperature: Type.Optional(Type.Number()),
-    precipitationProbability: Type.Optional(Type.Number()),
-    waveHeight: Type.Optional(Type.Number()),
-    swellHeight: Type.Optional(Type.Number()),
-    wavePeriod: Type.Optional(Type.Number()),
-  },
-  { additionalProperties: false },
-);
-
-export const chatResponseSchema = Type.Object(
-  {
-    conversationId: Type.String(),
-    assistantMessage: Type.String(),
-    location: Type.Optional(
-      Type.Object(
-        {
-          name: Type.String(),
-          admin1: Type.Optional(Type.String()),
-          country: Type.Optional(Type.String()),
-          lat: Type.Number(),
-          lon: Type.Number(),
-          timezone: Type.Optional(Type.String()),
-        },
-        { additionalProperties: false },
-      ),
-    ),
-    clarification: Type.Object(
-      {
-        needed: Type.Boolean(),
-        question: Type.Optional(Type.Union([Type.String(), Type.Null()])),
-        choices: Type.Array(
-          Type.Object(
-            {
-              id: Type.String(),
-              label: Type.String(),
-              lat: Type.Number(),
-              lon: Type.Number(),
+    },
+    clarification: {
+      type: "object",
+      required: ["needed", "choices"],
+      additionalProperties: false,
+      properties: {
+        needed: { type: "boolean" },
+        question: { anyOf: [{ type: "string" }, { type: "null" }] },
+        choices: {
+          type: "array",
+          items: {
+            type: "object",
+            required: ["id", "label", "lat", "lon"],
+            additionalProperties: false,
+            properties: {
+              id: { type: "string" },
+              label: { type: "string" },
+              lat: { type: "number" },
+              lon: { type: "number" },
             },
-            { additionalProperties: false },
-          ),
-        ),
-      },
-      { additionalProperties: false },
-    ),
-    cards: Type.Array(cardSchema),
-    timeSeries: Type.Array(chatTimeSeriesPointSchema),
-    sources: Type.Array(sourceAttributionSchema),
-    warnings: Type.Array(Type.String()),
-  },
-  {
-    additionalProperties: false,
-    examples: [
-      {
-        conversationId: "conv_abc",
-        assistantMessage: "Tomorrow afternoon looks breezy for South Padre. Watch gust spread and check local conditions.",
-        location: {
-          name: "South Padre Island",
-          admin1: "Texas",
-          country: "United States",
-          lat: 26.1118,
-          lon: -97.1681,
-          timezone: "America/Chicago",
-        },
-        clarification: { needed: false, question: null, choices: [] },
-        cards: [
-          {
-            type: "current_conditions",
-            title: "Current wind",
-            subtitle: "South Padre Island",
-            items: [{ label: "Wind", value: "16 mph SE", severity: "normal" }],
           },
-        ],
-        timeSeries: [],
-        sources: [{ provider: "Open-Meteo", dataset: "Forecast API", fetchedAt: "2026-04-26T12:00:00.000Z" }],
-        warnings: [],
+        },
       },
-    ],
+    },
+    cards: { type: "array", items: cardSchema },
+    timeSeries: { type: "array", items: timeSeriesPointSchema },
+    sources: { type: "array", items: sourceSchema },
+    warnings: { type: "array", items: { type: "string" } },
   },
-);
+  examples: [
+    {
+      conversationId: "conv_abc",
+      assistantMessage: "Tomorrow afternoon looks breezy for South Padre. Watch gust spread and check local conditions.",
+      location: {
+        name: "South Padre Island",
+        admin1: "Texas",
+        country: "United States",
+        lat: 26.1118,
+        lon: -97.1681,
+        timezone: "America/Chicago",
+      },
+      clarification: { needed: false, question: null, choices: [] },
+      cards: [
+        {
+          type: "current_conditions",
+          title: "Current wind",
+          subtitle: "South Padre Island",
+          items: [{ label: "Wind", value: "16 mph SE", severity: "normal" }],
+        },
+      ],
+      timeSeries: [],
+      sources: [{ provider: "Open-Meteo", dataset: "Forecast API", fetchedAt: "2026-04-26T12:00:00.000Z" }],
+      warnings: [],
+    },
+  ],
+} as const;
 
-export const forecastIntentSchema = Type.Object({
-  locationQuery: Type.Union([Type.String(), Type.Null()]),
-  coordinates: Type.Union([coordinatesSchema, Type.Null()]),
-  activity: Type.Union(activityValues.map((activity) => Type.Literal(activity))),
-  startTimeLocal: Type.Union([Type.String(), Type.Null()]),
-  endTimeLocal: Type.Union([Type.String(), Type.Null()]),
-  datePhrase: Type.Union([Type.String(), Type.Null()]),
-  units: Type.Union([unitsSchema, Type.Null()]),
-  requestedFields: Type.Array(Type.String()),
-  needsClarification: Type.Boolean(),
-  clarificationQuestion: Type.Union([Type.String(), Type.Null()]),
-});
+export const forecastIntentSchema = {
+  type: "object",
+  required: [
+    "locationQuery",
+    "coordinates",
+    "activity",
+    "startTimeLocal",
+    "endTimeLocal",
+    "datePhrase",
+    "units",
+    "requestedFields",
+    "needsClarification",
+    "clarificationQuestion",
+  ],
+  properties: {
+    locationQuery: { anyOf: [{ type: "string" }, { type: "null" }] },
+    coordinates: { anyOf: [coordinatesJsonSchema, { type: "null" }] },
+    activity: { type: "string", enum: activities },
+    startTimeLocal: { anyOf: [{ type: "string" }, { type: "null" }] },
+    endTimeLocal: { anyOf: [{ type: "string" }, { type: "null" }] },
+    datePhrase: { anyOf: [{ type: "string" }, { type: "null" }] },
+    units: { anyOf: [{ type: "string", enum: units }, { type: "null" }] },
+    requestedFields: { type: "array", items: { type: "string" } },
+    needsClarification: { type: "boolean" },
+    clarificationQuestion: { anyOf: [{ type: "string" }, { type: "null" }] },
+  },
+} as const;
 
 export const chatRouteSchema = {
   summary: "Send a natural-language forecast chat message",
@@ -141,6 +137,6 @@ export const chatRouteSchema = {
   body: chatRequestSchema,
   response: {
     200: chatResponseSchema,
-    ...errorResponseSchemas,
+    ...errorResponses,
   },
 };

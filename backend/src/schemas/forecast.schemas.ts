@@ -1,48 +1,70 @@
-import { Type } from "@sinclair/typebox";
-import { ActivitySchema, CoordinatesSchema, ForecastCardSchema, SourceAttributionSchema, UnitSystemSchema } from "./common.schemas.js";
+import { activityJsonSchema, cardSchema, coordinatesJsonSchema, forecastPayloadJsonSchema, sourceSchema, timeSeriesPointJsonSchema, unitsJsonSchema } from "./common.schemas.js";
+import { errorResponses } from "./error.schemas.js";
 
-export const ForecastRequestBodySchema = Type.Object({
-  location: Type.Intersect([
-    CoordinatesSchema,
-    Type.Object({
-      name: Type.Optional(Type.String()),
-    }),
-  ]),
-  activity: ActivitySchema,
-  startTime: Type.Optional(Type.String({ format: "date-time" })),
-  endTime: Type.Optional(Type.String({ format: "date-time" })),
-  units: Type.Optional(UnitSystemSchema),
-  include: Type.Optional(
-    Type.Array(Type.Union([
-      Type.Literal("wind"),
-      Type.Literal("marine"),
-      Type.Literal("tides"),
-      Type.Literal("observations"),
-      Type.Literal("alerts"),
-    ])),
-  ),
-});
+export const forecastRequestBodyJsonSchema = {
+  type: "object",
+  required: ["location", "activity"],
+  additionalProperties: false,
+  properties: {
+    location: {
+      type: "object",
+      required: ["lat", "lon"],
+      additionalProperties: false,
+      properties: {
+        ...coordinatesJsonSchema.properties,
+        name: { type: "string" },
+      },
+    },
+    activity: activityJsonSchema,
+    startTime: { type: "string", format: "date-time" },
+    endTime: { type: "string", format: "date-time" },
+    units: unitsJsonSchema,
+    include: {
+      type: "array",
+      items: { type: "string", enum: ["wind", "marine", "tides", "observations", "alerts"] },
+    },
+  },
+  examples: [
+    {
+      location: { lat: 26.1118, lon: -97.1681, name: "South Padre Island" },
+      activity: "kitesurfing",
+      startTime: "2026-04-27T12:00:00-05:00",
+      endTime: "2026-04-27T18:00:00-05:00",
+      units: "imperial",
+      include: ["wind", "marine", "tides", "observations"],
+    },
+  ],
+} as const;
 
-export const ForecastResponseSchema = Type.Object({
-  location: Type.Optional(Type.Object({
-    name: Type.String(),
-    lat: Type.Number(),
-    lon: Type.Number(),
-  })),
-  cards: Type.Array(ForecastCardSchema),
-  timeSeries: Type.Array(Type.Object({
-    time: Type.String(),
-    windSpeed: Type.Optional(Type.Number()),
-    windSpeedUnit: Type.Optional(Type.String()),
-    windDirectionDegrees: Type.Optional(Type.Number()),
-    windDirectionCompass: Type.Optional(Type.String()),
-    windGust: Type.Optional(Type.Number()),
-    airTemperature: Type.Optional(Type.Number()),
-    precipitationProbability: Type.Optional(Type.Number()),
-    waveHeight: Type.Optional(Type.Number()),
-    swellHeight: Type.Optional(Type.Number()),
-    wavePeriod: Type.Optional(Type.Number()),
-  })),
-  sources: Type.Array(SourceAttributionSchema),
-  warnings: Type.Array(Type.String()),
-});
+export const forecastResponseJsonSchema = {
+  type: "object",
+  required: ["cards", "timeSeries", "sources", "warnings"],
+  additionalProperties: false,
+  properties: {
+    location: {
+      type: "object",
+      required: ["lat", "lon"],
+      additionalProperties: false,
+      properties: {
+        name: { type: "string" },
+        lat: { type: "number" },
+        lon: { type: "number" },
+      },
+    },
+    cards: { type: "array", items: cardSchema },
+    timeSeries: { type: "array", items: timeSeriesPointJsonSchema },
+    sources: { type: "array", items: sourceSchema },
+    warnings: { type: "array", items: { type: "string" } },
+  },
+} as const;
+
+export const forecastRouteSchema = {
+  summary: "Get a structured forecast",
+  description: "Direct endpoint for app screens that need structured wind, marine, tide, observation, and ranking data without chat.",
+  tags: ["Forecasts"],
+  body: forecastRequestBodyJsonSchema,
+  response: {
+    200: forecastResponseJsonSchema,
+    ...errorResponses,
+  },
+} as const;

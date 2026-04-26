@@ -19,7 +19,8 @@ const envSchema = z
     RATE_LIMIT_MAX: z.coerce.number().int().positive().default(100),
     RATE_LIMIT_WINDOW: z.string().default("1 minute"),
     CHAT_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(20),
-    LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]).default("info")
+    LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]).default("info"),
+    PROVIDER_TIMEOUT_MS: z.coerce.number().int().positive().default(10000)
   })
   .superRefine((env, ctx) => {
     if (env.NODE_ENV === "production" && !env.OPENAI_API_KEY) {
@@ -56,6 +57,7 @@ export const config = {
   rateLimitWindow: parsed.data.RATE_LIMIT_WINDOW,
   chatRateLimitMax: parsed.data.CHAT_RATE_LIMIT_MAX,
   logLevel: parsed.data.LOG_LEVEL,
+  providerTimeoutMs: parsed.data.PROVIDER_TIMEOUT_MS,
   isMockAiMode: !parsed.data.OPENAI_API_KEY && parsed.data.NODE_ENV !== "production"
 } as const;
 

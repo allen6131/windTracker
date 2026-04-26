@@ -29,6 +29,35 @@ export const coordinatesJsonSchema = {
   },
 } as const;
 
+export const coordinatesSchema = coordinatesJsonSchema;
+
+export const unitsSchema = {
+  type: "string",
+  enum: units,
+} as const;
+
+export const activitySchema = {
+  type: "string",
+  enum: activities,
+} as const;
+
+export const locationCandidateJsonSchema = {
+  type: "object",
+  required: ["id", "name", "lat", "lon", "source"],
+  additionalProperties: false,
+  properties: {
+    id: { type: "string" },
+    name: { type: "string" },
+    admin1: { type: "string" },
+    country: { type: "string" },
+    lat: { type: "number" },
+    lon: { type: "number" },
+    timezone: { type: "string" },
+    source: { type: "string", enum: ["Google", "Open-Meteo", "Manual"] },
+    confidence: { type: "number" },
+  },
+} as const;
+
 export const sourceSchema = {
   type: "object",
   required: ["provider", "dataset", "fetchedAt"],
@@ -46,6 +75,8 @@ export const sourceSchema = {
     distanceKm: { type: "number" },
   },
 } as const;
+
+export const sourceAttributionSchema = sourceSchema;
 
 export const healthResponseSchema = {
   type: "object",
@@ -84,6 +115,12 @@ export const cardSchema = {
     },
   },
 } as const;
+
+export const ForecastCardSchema = cardSchema;
+export const SourceAttributionSchema = sourceSchema;
+export const CoordinatesSchema = coordinatesJsonSchema;
+export const UnitSystemSchema = unitsSchema;
+export const ActivitySchema = activitySchema;
 
 export const timeSeriesPointSchema = {
   type: "object",

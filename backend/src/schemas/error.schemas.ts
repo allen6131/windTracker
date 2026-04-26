@@ -14,7 +14,7 @@ export const errorResponseSchema = {
   },
 } as const;
 
-export const standardErrorResponses = {
+export const errorResponses = {
   400: {
     description: "Bad request",
     ...errorResponseSchema,
@@ -36,3 +36,5 @@ export const standardErrorResponses = {
     ...errorResponseSchema,
   },
 } as const;
+
+export const errorResponseSchemas = errorResponses;
