@@ -43,7 +43,7 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
             )
         }
         viewModelScope.launch {
-            repository.sendChat(message, _state.value.conversationId, units, userLocation)
+            repository.sendMessage(message, _state.value.conversationId, units, userLocation)
                 .onSuccess { response -> applyResponse(response) }
                 .onFailure { error ->
                     _state.update {

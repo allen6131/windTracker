@@ -1,13 +1,13 @@
 import SwiftUI
 
 struct LocationDisambiguationView: View {
-    let choices: [ClarificationChoice]
-    let onSelect: (ClarificationChoice) -> Void
+    let clarification: Clarification
+    let onSelect: (LocationChoice) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Choose a location").font(.headline)
-            ForEach(choices) { choice in
+            Text(clarification.question ?? "Choose a location").font(.headline)
+            ForEach(clarification.choices) { choice in
                 Button(action: { onSelect(choice) }) {
                     HStack {
                         VStack(alignment: .leading) {

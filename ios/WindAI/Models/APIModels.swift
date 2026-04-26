@@ -8,6 +8,13 @@ enum UnitSystem: String, Codable, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
+enum Platform: String, Codable {
+    case ios
+    case android
+    case web
+    case unknown
+}
+
 enum Activity: String, Codable, CaseIterable, Identifiable {
     case kitesurfing
     case windsurfing
@@ -32,7 +39,7 @@ struct ChatRequest: Encodable {
     let message: String
     let userLocation: Coordinates?
     let units: UnitSystem?
-    let platform: String
+    let platform: Platform
 }
 
 struct ChatResponse: Codable, Equatable {

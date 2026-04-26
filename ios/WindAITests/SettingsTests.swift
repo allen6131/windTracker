@@ -4,8 +4,8 @@ import XCTest
 final class SettingsTests: XCTestCase {
     func testSettingsDefaults() {
         let settings = SettingsViewModel()
-        XCTAssertFalse(settings.units.isEmpty)
-        settings.units = "knots"
-        XCTAssertEqual(settings.units, "knots")
+        XCTAssertEqual(settings.units, .imperial)
+        settings.units = .knots
+        XCTAssertEqual(settings.units, .knots)
     }
 }
