@@ -4,6 +4,208 @@
 	classes = {};
 	objectVersion = 60;
 	objects = {
+
+/* Begin PBXBuildFile section */
+		000000000000000000000101 /* WindAIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000201 /* WindAIApp.swift */; };
+		000000000000000000000102 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000202 /* APIModels.swift */; };
+		000000000000000000000103 /* ChatModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000203 /* ChatModels.swift */; };
+		000000000000000000000104 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000204 /* APIClient.swift */; };
+		000000000000000000000105 /* LocationPermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000205 /* LocationPermissionService.swift */; };
+		000000000000000000000106 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000206 /* ChatViewModel.swift */; };
+		000000000000000000000107 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000207 /* SettingsViewModel.swift */; };
+		000000000000000000000108 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000208 /* AppSettings.swift */; };
+		000000000000000000000109 /* ChatScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000209 /* ChatScreen.swift */; };
+		00000000000000000000010A /* ForecastCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000020A /* ForecastCards.swift */; };
+		00000000000000000000010B /* LocationDisambiguationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000020B /* LocationDisambiguationView.swift */; };
+		00000000000000000000010C /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000020C /* SettingsScreen.swift */; };
+		00000000000000000000010D /* DataSourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000020D /* DataSourcesView.swift */; };
+		00000000000000000000010E /* ChatResponseDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000020E /* ChatResponseDecodingTests.swift */; };
+		00000000000000000000010F /* ChatViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000020F /* ChatViewModelTests.swift */; };
+		000000000000000000000110 /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000210 /* SettingsTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		000000000000000000000301 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000401;
+			remoteInfo = WindAI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		000000000000000000000201 /* WindAIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindAIApp.swift; sourceTree = "<group>"; };
+		000000000000000000000202 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/APIModels.swift; sourceTree = "<group>"; };
+		000000000000000000000203 /* ChatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/ChatModels.swift; sourceTree = "<group>"; };
+		000000000000000000000204 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/APIClient.swift; sourceTree = "<group>"; };
+		000000000000000000000205 /* LocationPermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/LocationPermissionService.swift; sourceTree = "<group>"; };
+		000000000000000000000206 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels/ChatViewModel.swift; sourceTree = "<group>"; };
+		000000000000000000000207 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels/SettingsViewModel.swift; sourceTree = "<group>"; };
+		000000000000000000000208 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage/AppSettings.swift; sourceTree = "<group>"; };
+		000000000000000000000209 /* ChatScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/ChatScreen.swift; sourceTree = "<group>"; };
+		00000000000000000000020A /* ForecastCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/ForecastCards.swift; sourceTree = "<group>"; };
+		00000000000000000000020B /* LocationDisambiguationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/LocationDisambiguationView.swift; sourceTree = "<group>"; };
+		00000000000000000000020C /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/SettingsScreen.swift; sourceTree = "<group>"; };
+		00000000000000000000020D /* DataSourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/DataSourcesView.swift; sourceTree = "<group>"; };
+		00000000000000000000020E /* ChatResponseDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatResponseDecodingTests.swift; sourceTree = "<group>"; };
+		00000000000000000000020F /* ChatViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModelTests.swift; sourceTree = "<group>"; };
+		000000000000000000000210 /* SettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTests.swift; sourceTree = "<group>"; };
+		000000000000000000000211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		000000000000000000000212 /* WindAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WindAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000213 /* WindAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WindAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		000000000000000000000501 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		000000000000000000000502 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		000000000000000000000601 = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000602 /* WindAI */,
+				000000000000000000000603 /* WindAITests */,
+				000000000000000000000604 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		000000000000000000000602 /* WindAI */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000211 /* Info.plist */,
+				000000000000000000000201 /* WindAIApp.swift */,
+				000000000000000000000202 /* APIModels.swift */,
+				000000000000000000000203 /* ChatModels.swift */,
+				000000000000000000000204 /* APIClient.swift */,
+				000000000000000000000205 /* LocationPermissionService.swift */,
+				000000000000000000000206 /* ChatViewModel.swift */,
+				000000000000000000000207 /* SettingsViewModel.swift */,
+				000000000000000000000208 /* AppSettings.swift */,
+				000000000000000000000209 /* ChatScreen.swift */,
+				00000000000000000000020A /* ForecastCards.swift */,
+				00000000000000000000020B /* LocationDisambiguationView.swift */,
+				00000000000000000000020C /* SettingsScreen.swift */,
+				00000000000000000000020D /* DataSourcesView.swift */,
+			);
+			path = WindAI;
+			sourceTree = "<group>";
+		};
+		000000000000000000000603 /* WindAITests */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000020E /* ChatResponseDecodingTests.swift */,
+				00000000000000000000020F /* ChatViewModelTests.swift */,
+				000000000000000000000210 /* SettingsTests.swift */,
+			);
+			path = WindAITests;
+			sourceTree = "<group>";
+		};
+		000000000000000000000604 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000212 /* WindAI.app */,
+				000000000000000000000213 /* WindAITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		000000000000000000000401 /* WindAI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000901 /* Build configuration list for PBXNativeTarget "WindAI" */;
+			buildPhases = (000000000000000000000701 /* Sources */, 000000000000000000000501 /* Frameworks */, 000000000000000000000801 /* Resources */);
+			buildRules = ();
+			dependencies = ();
+			name = WindAI;
+			productName = WindAI;
+			productReference = 000000000000000000000212 /* WindAI.app */;
+			productType = "com.apple.product-type.application";
+		};
+		000000000000000000000402 /* WindAITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000902 /* Build configuration list for PBXNativeTarget "WindAITests" */;
+			buildPhases = (000000000000000000000702 /* Sources */, 000000000000000000000502 /* Frameworks */, 000000000000000000000802 /* Resources */);
+			buildRules = ();
+			dependencies = (000000000000000000000302 /* PBXTargetDependency */);
+			name = WindAITests;
+			productName = WindAITests;
+			productReference = 000000000000000000000213 /* WindAITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		000000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					000000000000000000000401 = {CreatedOnToolsVersion = 15.0;};
+					000000000000000000000402 = {CreatedOnToolsVersion = 15.0; TestTargetID = 000000000000000000000401;};
+				};
+			};
+			buildConfigurationList = 000000000000000000000900 /* Build configuration list for PBXProject "WindAI" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (en, Base);
+			mainGroup = 000000000000000000000601;
+			productRefGroup = 000000000000000000000604 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (000000000000000000000401 /* WindAI */, 000000000000000000000402 /* WindAITests */);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		000000000000000000000801 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		000000000000000000000802 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		000000000000000000000701 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000101, 000000000000000000000102, 000000000000000000000103, 000000000000000000000104,
+				000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108,
+				000000000000000000000109, 00000000000000000000010A, 00000000000000000000010B, 00000000000000000000010C,
+				00000000000000000000010D,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000702 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (00000000000000000000010E, 00000000000000000000010F, 000000000000000000000110);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		000000000000000000000302 /* PBXTargetDependency */ = {isa = PBXTargetDependency; target = 000000000000000000000401 /* WindAI */; targetProxy = 000000000000000000000301 /* PBXContainerItemProxy */; };
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		000000000000000000000A01 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {IPHONEOS_DEPLOYMENT_TARGET = 17.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0;}; name = Debug; };
+		000000000000000000000A02 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {IPHONEOS_DEPLOYMENT_TARGET = 17.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0;}; name = Release; };
+		000000000000000000000A03 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = WindAI/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MARKETING_VERSION = 0.1.0; PRODUCT_BUNDLE_IDENTIFIER = com.windai.app; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2";}; name = Debug; };
+		000000000000000000000A04 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = WindAI/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MARKETING_VERSION = 0.1.0; PRODUCT_BUNDLE_IDENTIFIER = com.windai.app; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2";}; name = Release; };
+		000000000000000000000A05 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {BUNDLE_LOADER = "$(TEST_HOST)"; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; PRODUCT_BUNDLE_IDENTIFIER = com.windai.app.tests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WindAI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WindAI";}; name = Debug; };
+		000000000000000000000A06 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {BUNDLE_LOADER = "$(TEST_HOST)"; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; PRODUCT_BUNDLE_IDENTIFIER = com.windai.app.tests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WindAI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WindAI";}; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		000000000000000000000900 /* Build configuration list for PBXProject "WindAI" */ = {isa = XCConfigurationList; buildConfigurations = (000000000000000000000A01, 000000000000000000000A02); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		000000000000000000000901 /* Build configuration list for PBXNativeTarget "WindAI" */ = {isa = XCConfigurationList; buildConfigurations = (000000000000000000000A03, 000000000000000000000A04); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		000000000000000000000902 /* Build configuration list for PBXNativeTarget "WindAITests" */ = {isa = XCConfigurationList; buildConfigurations = (000000000000000000000A05, 000000000000000000000A06); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
 	};
-	rootObject = 000000000000000000000000;
+	rootObject = 000000000000000000000001 /* Project object */;
 }
