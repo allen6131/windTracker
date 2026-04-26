@@ -36,7 +36,12 @@ class ChatViewModelTest {
     @Test
     fun sendMessageUpdatesSuccessState() = runTest {
         val repository = object : ChatRepository {
-            override suspend fun sendChat(request: ChatRequest): Result<ChatResponse> =
+            override suspend fun sendMessage(
+                message: String,
+                conversationId: String?,
+                units: String,
+                userLocation: com.windai.data.api.Coordinates?,
+            ): Result<ChatResponse> =
                 Result.success(
                     ChatResponse(
                         conversationId = "c1",
