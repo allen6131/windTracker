@@ -211,6 +211,8 @@ export class OpenAiOrchestrator {
   }
 
   private extractLocationQuery(message: string): string {
+    const beachQuestion = message.match(/\bis\s+([A-Za-z .'-]+?)\s+(?:good|ok|safe|worth|windy)\b/i);
+    if (beachQuestion?.[1]) return beachQuestion[1].trim();
     const match = message.match(/\b(?:near|at|out of|in|for)\s+([A-Za-z .'-]+?)(?:\s+(?:tomorrow|today|this weekend|at|around|for|good|conditions|forecast)|[?.!,]|$)/i);
     if (match?.[1]) return match[1].trim();
     return message
